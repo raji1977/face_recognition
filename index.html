@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Recognition</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+    <h1>📸 Face Recognition System</h1>
+
+    <!-- Webcam Section -->
+    <h3>Live Camera View</h3>
+    <video id="video" width="100%" autoplay muted playsinline></video>
+    <canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
+    <button id="capture-btn">Capture from Camera</button>
+
+    <!-- Upload Section -->
+    <h3>Upload an Image</h3>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" required>
+        <button type="submit">Upload & Recognize</button>
+    </form>
+
+    <!-- Result Display -->
+    <div class="results">
+        <h3 id="result">{% if result %}Recognized: {{ ', '.join(result) }}{% else %}Recognized: {% endif %}</h3>
+        {% if image_path %}
+            <img id="captured-img" src="{{ url_for('static', filename=image_path) }}" alt="Result Image">
+        {% else %}
+            <img id="captured-img" src="" style="display: none;">
+        {% endif %}
+    </div>
+</div>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
